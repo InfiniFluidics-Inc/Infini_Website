@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Technology | InfiniFluidics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--td:#061f19;--tm:#082e24;--teal:#0d5e4a;--mint:#1db885;--mb:#2ef5a8;--gold:#ffd166;--cream:#f6faf8;--w:#fff;--tw:#f2f9f6;--ts:rgba(255,255,255,.72);--tmute:rgba(255,255,255,.35);--dk:#14302a;--mid:#4a6b60;--font:'Plus Jakarta Sans',-apple-system,sans-serif}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--td);color:var(--tw);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
+
+.nav{position:fixed;top:0;left:0;right:0;height:80px;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(6,31,25,.94);backdrop-filter:blur(20px);box-shadow:0 4px 30px rgba(0,0,0,.3)}
+.nav-logo{display:flex;align-items:center;background:var(--w);border-radius:16px;padding:10px 20px;box-shadow:0 4px 24px rgba(0,0,0,.2)}
+.nav-logo img{height:50px}
+.nl{display:flex;align-items:center;gap:28px;list-style:none}
+.nl a{font-size:.9rem;font-weight:500;color:rgba(255,255,255,.75)}
+.nl a:hover{color:var(--mb)}
+.nc{padding:11px 26px!important;background:var(--mint)!important;color:var(--w)!important;border-radius:10px;font-weight:700!important}
+.nt{display:none;flex-direction:column;gap:5px;cursor:pointer}.nt span{display:block;width:22px;height:2px;background:#fff}
+
+.beat{padding:110px 48px;position:relative;overflow:hidden}
+.bi{max-width:1000px;margin:0 auto}
+.bc{text-align:center}
+.beat h2{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800;line-height:1.1;margin-bottom:16px;letter-spacing:-.02em}
+.beat h2 span{background:linear-gradient(135deg,var(--mb),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.beat p{font-size:clamp(1.08rem,1.8vw,1.22rem);color:var(--ts);line-height:1.7;max-width:560px}
+.bc p{margin:0 auto}
+.bg-d{background:var(--td)}.bg-m{background:var(--tm)}
+.bg-w{background:var(--w);color:var(--dk)}.bg-w p{color:var(--mid)}.bg-w h2 span{color:var(--teal)}
+.bg-c{background:var(--cream);color:var(--dk)}.bg-c p{color:var(--mid)}.bg-c h2 span{color:var(--teal)}
+
+/* HERO */
+.th{min-height:88vh;display:flex;align-items:center;justify-content:center;padding:140px 48px 100px}
+.th .bi{text-align:center}
+.th h1{font-size:clamp(2.6rem,6vw,4.2rem);font-weight:800;line-height:1.05;margin-bottom:20px;letter-spacing:-.03em;max-width:700px;margin-left:auto;margin-right:auto}
+.th h1 span{background:linear-gradient(135deg,var(--mb),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.th p{font-size:1.2rem;color:var(--ts);max-width:520px;line-height:1.7;margin-left:auto;margin-right:auto}
+.sb{margin:32px auto 0;max-width:360px;border-radius:14px;overflow:hidden;border:2px solid rgba(255,255,255,.08);box-shadow:0 16px 48px rgba(0,0,0,.3)}
+.sb img{width:100%;filter:sepia(.1) contrast(1.05)}
+.sb-cap{font-size:.92rem;color:var(--tmute);margin-top:12px;font-style:italic;text-align:center}
+
+/* CONVENTIONAL (reddish gradient) */
+.bg-prob{background:linear-gradient(170deg,#fef8f6,#fbe8e4,#f8f0ee);color:var(--dk)}
+.bg-prob p{color:var(--mid)}
+.bg-prob h2 span{background:linear-gradient(135deg,#c0392b,#e74c3c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.conv-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.conv-card{padding:28px 24px 20px;border-radius:18px;text-align:center;border:1.5px solid;display:flex;flex-direction:column;min-height:320px}
+.conv-card.ok{background:rgba(29,184,133,.04);border-color:rgba(29,184,133,.2)}
+.conv-card.warn{background:rgba(255,180,50,.06);border-color:rgba(255,180,50,.25)}
+.conv-card.fail{background:rgba(255,70,70,.06);border-color:rgba(255,70,70,.25)}
+.conv-card h3{font-size:1.6rem;font-weight:800;margin-bottom:4px}
+.conv-card.ok h3{color:var(--teal)}
+.conv-card.warn h3{color:#c0820a}
+.conv-card.fail h3{color:#c0392b}
+.conv-card .sub{font-size:.95rem;font-weight:600;margin-bottom:16px}
+.conv-card.ok .sub{color:var(--mint)}
+.conv-card.warn .sub{color:#c0820a}
+.conv-card.fail .sub{color:#c0392b}
+.conv-card .viz{flex:1;display:flex;align-items:center;justify-content:center}
+.conv-card p{font-size:1rem;color:var(--mid);line-height:1.5;max-width:none;margin:12px 0 0}
+.conv-card .status{margin-top:auto;padding-top:14px;font-size:.88rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.conv-card.ok .status{color:var(--mint)}
+.conv-card.warn .status{color:#c0820a}
+.conv-card.fail .status{color:#c0392b}
+
+/* SCALE OUT */
+.so-row{display:flex;align-items:flex-end;justify-content:center;gap:28px;margin-top:56px;flex-wrap:wrap}
+.so-col{text-align:center}
+.so-chip{border-radius:10px;border:2px solid var(--mint);background:rgba(29,184,133,.08);display:grid;padding:6px;margin:0 auto 12px;box-shadow:0 6px 24px rgba(29,184,133,.15);overflow:hidden;align-content:center}
+.so-u{border-radius:2px;background:var(--mint);opacity:.55;aspect-ratio:1}
+.so-label{font-size:1.6rem;font-weight:800;color:var(--mb)}
+.so-sub{font-size:.95rem;color:var(--ts);margin-top:4px;max-width:120px;margin-left:auto;margin-right:auto;line-height:1.3}
+.so-arr{font-size:1.8rem;color:var(--tmute);align-self:center;margin-bottom:50px}
+
+/* BUILDING BLOCKS */
+.bb-top{display:grid;grid-template-columns:180px 1fr;gap:24px;align-items:stretch;margin-top:48px}
+.bb-platform{padding:28px 20px;background:linear-gradient(135deg,rgba(13,94,74,.08),rgba(29,184,133,.06));border:2.5px solid var(--teal);border-radius:18px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.bb-plat-title{font-size:1.2rem;font-weight:800;color:var(--teal);margin-top:6px}
+.bb-plat-sub{font-size:.88rem;color:var(--mid);margin-top:6px;line-height:1.4;font-weight:600}
+.bb-right{display:flex;align-items:center;gap:20px}
+.bb-plus{font-size:2.8rem;font-weight:300;color:var(--mid);flex-shrink:0;line-height:1}
+.bb-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;flex:1}
+.bb-card{padding:18px 10px;background:var(--cream);border:1.5px solid #e0ece6;border-radius:14px;text-align:center;transition:all .3s}
+.bb-card:hover{border-color:var(--mint);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.05)}
+.bb-icon{width:44px;height:44px;margin:0 auto 8px;border-radius:50%;background:rgba(13,94,74,.06);border:1.5px solid rgba(13,94,74,.12);display:flex;align-items:center;justify-content:center}
+.bb-card h4{font-size:.88rem;font-weight:700;color:var(--dk);line-height:1.3}
+
+/* CQA Graph */
+.cqa-wrap{margin-top:36px}
+.cqa-box{background:var(--w);border:1.5px solid #e0ece6;border-radius:18px;padding:36px 32px}
+.cqa-box h4{font-size:1.1rem;font-weight:700;color:var(--dk);margin-bottom:16px;text-align:center}
+.draw-line{transition:stroke-dashoffset 1.5s ease .3s}
+.dot-pop{transition:opacity .4s ease 1.6s}
+.cqa-box.animated .draw-line{stroke-dashoffset:0!important}
+.cqa-box.animated .dot-pop{opacity:1!important}
+
+/* WAFER */
+.wf{margin:48px auto 0;max-width:460px}
+.wf-frame{border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.06);border:1px solid #e0ece6}
+.wf-frame img{width:100%}
+.wf-cap{text-align:center;margin-top:14px;font-size:.92rem;color:var(--mid);font-style:italic}
+
+/* CTA */
+.cta{text-align:center;padding:100px 48px;background:var(--tm)}
+.cta h2{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;margin-bottom:16px}
+.cta h2 span{background:linear-gradient(135deg,var(--mb),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta p{font-size:1.05rem;color:var(--ts);margin:0 auto 32px;max-width:440px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:16px 36px;background:linear-gradient(135deg,var(--mint),#17a077);color:var(--w);border-radius:14px;font-size:1rem;font-weight:700;transition:all .3s;box-shadow:0 8px 30px rgba(29,184,133,.35)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 12px 44px rgba(29,184,133,.45)}
+
+.footer{background:#041a14;padding:36px 48px;display:flex;align-items:center;justify-content:space-between;font-size:.82rem;color:var(--tmute)}
+.fl{display:flex;align-items:center;background:var(--w);border-radius:14px;padding:8px 16px}
+.fl img{height:32px}
+
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){.bb-top{grid-template-columns:1fr}.bb-cards{grid-template-columns:repeat(3,1fr)}.conv-row{grid-template-columns:1fr}.bb-right{flex-direction:column}}
+@media(max-width:768px){
+.nav{padding:0 20px;height:72px}.nl{display:none}.nt{display:flex}
+.beat,.th{padding:80px 20px}
+.conv-row{gap:16px}.conv-card{flex:0 0 100%}
+.so-row{gap:12px}.so-arr{display:none}
+.bb-cards{grid-template-columns:repeat(2,1fr)}
+.footer{flex-direction:column;gap:10px;text-align:center}
+}
+@media(max-width:480px){.bb-cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo"><img src="assets/logos/logo-infinifluidics.png" alt="InfiniFluidics"></a>
+  <ul class="nl">
+    <li><a href="index.html#pipeline">About</a></li>
+    <li><a href="technology.html">Technology</a></li>
+    <li><a href="index.html#particles">Platform</a></li>
+    <li><a href="index.html#team">Team</a></li>
+    <li><a href="news.html">News</a></li>
+    <li><a href="index.html#contact" class="nc">Get in Touch</a></li>
+  </ul>
+  <div class="nt" onclick="this.closest('.nav').querySelector('.nl').classList.toggle('active')"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- BEAT 1: THE PROBLEM -->
+<section class="th bg-d">
+  <div class="bi reveal">
+    <h1>Traditional microfluidics has a <span>scaling problem</span>.</h1>
+    <p>In conventional microfluidic manufacturing, each production unit needs its own pump, its own tubing, its own connections. Like early telephone switchboards, every new line requires manual wiring.</p>
+    <div class="sb">
+      <img src="assets/tech/switchboard.jpg" alt="Telephone switchboard">
+    </div>
+    <div class="sb-cap">Early switchboards required a physical connection for every call. Conventional microfluidics works the same way.</div>
+  </div>
+</section>
+
+<!-- BEAT 2: 1X IS FINE, 2X IS TOUGH, 100X IS IMPOSSIBLE -->
+<section class="beat bg-prob">
+  <div class="bi bc reveal">
+    <h2>Traditional scale-up means <span>more hardware</span>.</h2>
+    <p>Each additional unit needs its own pump and plumbing. Complexity, cost, and failure points grow with every step.</p>
+
+    <div class="conv-row">
+      <div class="conv-card ok">
+        <h3>1×</h3>
+        <div class="sub">1 pump, 1 chip</div>
+        <div class="viz">
+          <svg width="180" height="56" viewBox="0 0 180 56" fill="none">
+            <rect x="8" y="13" width="42" height="30" rx="6" fill="rgba(13,94,74,.08)" stroke="#0d5e4a" stroke-width="1.2"/>
+            <text x="29" y="32" font-family="Plus Jakarta Sans" font-size="8" fill="#0d5e4a" text-anchor="middle" font-weight="700">PUMP</text>
+            <line x1="50" y1="28" x2="74" y2="28" stroke="#1db885" stroke-width="1.5"/>
+            <rect x="74" y="16" width="28" height="24" rx="4" fill="rgba(29,184,133,.12)" stroke="#1db885" stroke-width="1.2"/>
+            <line x1="102" y1="28" x2="126" y2="28" stroke="#1db885" stroke-width="1.5"/>
+            <circle cx="140" cy="28" r="10" fill="rgba(29,184,133,.08)" stroke="#1db885" stroke-width="1.2"/>
+            <text x="140" y="31" font-family="Plus Jakarta Sans" font-size="7" fill="#1db885" text-anchor="middle" font-weight="700">OUT</text>
+          </svg>
+        </div>
+        <p>Simple. Clean. Works at lab scale.</p>
+        <div class="status">Manageable ✓</div>
+      </div>
+
+      <div class="conv-card warn">
+        <h3>2×</h3>
+        <div class="sub">2 pumps, 2 chips, 2× tubing</div>
+        <div class="viz">
+          <svg width="180" height="72" viewBox="0 0 180 72" fill="none">
+            <rect x="8" y="6" width="34" height="22" rx="4" fill="rgba(192,130,10,.06)" stroke="#c0820a" stroke-width="1"/>
+            <text x="25" y="20" font-family="Plus Jakarta Sans" font-size="6.5" fill="#c0820a" text-anchor="middle" font-weight="700">PUMP</text>
+            <rect x="8" y="44" width="34" height="22" rx="4" fill="rgba(192,130,10,.06)" stroke="#c0820a" stroke-width="1"/>
+            <text x="25" y="58" font-family="Plus Jakarta Sans" font-size="6.5" fill="#c0820a" text-anchor="middle" font-weight="700">PUMP</text>
+            <line x1="42" y1="17" x2="62" y2="17" stroke="#c0820a" stroke-width="1"/><line x1="42" y1="55" x2="62" y2="55" stroke="#c0820a" stroke-width="1"/>
+            <rect x="62" y="8" width="22" height="18" rx="3" fill="rgba(192,130,10,.06)" stroke="#c0820a" stroke-width="1"/>
+            <rect x="62" y="46" width="22" height="18" rx="3" fill="rgba(192,130,10,.06)" stroke="#c0820a" stroke-width="1"/>
+            <line x1="84" y1="17" x2="104" y2="17" stroke="#c0820a" stroke-width="1"/><line x1="84" y1="55" x2="104" y2="55" stroke="#c0820a" stroke-width="1"/>
+            <circle cx="114" cy="17" r="8" fill="rgba(192,130,10,.04)" stroke="#c0820a" stroke-width="1"/>
+            <circle cx="114" cy="55" r="8" fill="rgba(192,130,10,.04)" stroke="#c0820a" stroke-width="1"/>
+          </svg>
+        </div>
+        <p>Double everything. Double cost, double failure points.</p>
+        <div class="status">Difficult ⚠</div>
+      </div>
+
+      <div class="conv-card fail">
+        <h3>100×</h3>
+        <div class="sub">100 pumps, 100 chips, 300+ tubes</div>
+        <div class="viz">
+          <svg width="180" height="100" viewBox="0 0 180 100" fill="none">
+            <!-- 10x10 grid of tiny pumps -->
+            <g fill="rgba(192,57,43,.06)" stroke="#c0392b" stroke-width=".5">
+              <rect x="4" y="4" width="8" height="6" rx="1"/><rect x="14" y="4" width="8" height="6" rx="1"/><rect x="24" y="4" width="8" height="6" rx="1"/><rect x="34" y="4" width="8" height="6" rx="1"/><rect x="44" y="4" width="8" height="6" rx="1"/>
+              <rect x="4" y="13" width="8" height="6" rx="1"/><rect x="14" y="13" width="8" height="6" rx="1"/><rect x="24" y="13" width="8" height="6" rx="1"/><rect x="34" y="13" width="8" height="6" rx="1"/><rect x="44" y="13" width="8" height="6" rx="1"/>
+              <rect x="4" y="22" width="8" height="6" rx="1"/><rect x="14" y="22" width="8" height="6" rx="1"/><rect x="24" y="22" width="8" height="6" rx="1"/><rect x="34" y="22" width="8" height="6" rx="1"/><rect x="44" y="22" width="8" height="6" rx="1"/>
+              <rect x="4" y="31" width="8" height="6" rx="1"/><rect x="14" y="31" width="8" height="6" rx="1"/><rect x="24" y="31" width="8" height="6" rx="1"/><rect x="34" y="31" width="8" height="6" rx="1"/><rect x="44" y="31" width="8" height="6" rx="1"/>
+              <rect x="4" y="40" width="8" height="6" rx="1"/><rect x="14" y="40" width="8" height="6" rx="1"/><rect x="24" y="40" width="8" height="6" rx="1"/><rect x="34" y="40" width="8" height="6" rx="1"/><rect x="44" y="40" width="8" height="6" rx="1"/>
+              <rect x="4" y="49" width="8" height="6" rx="1"/><rect x="14" y="49" width="8" height="6" rx="1"/><rect x="24" y="49" width="8" height="6" rx="1"/><rect x="34" y="49" width="8" height="6" rx="1"/><rect x="44" y="49" width="8" height="6" rx="1"/>
+              <rect x="4" y="58" width="8" height="6" rx="1"/><rect x="14" y="58" width="8" height="6" rx="1"/><rect x="24" y="58" width="8" height="6" rx="1"/><rect x="34" y="58" width="8" height="6" rx="1"/><rect x="44" y="58" width="8" height="6" rx="1"/>
+              <rect x="4" y="67" width="8" height="6" rx="1"/><rect x="14" y="67" width="8" height="6" rx="1"/><rect x="24" y="67" width="8" height="6" rx="1"/><rect x="34" y="67" width="8" height="6" rx="1"/><rect x="44" y="67" width="8" height="6" rx="1"/>
+              <rect x="4" y="76" width="8" height="6" rx="1"/><rect x="14" y="76" width="8" height="6" rx="1"/><rect x="24" y="76" width="8" height="6" rx="1"/><rect x="34" y="76" width="8" height="6" rx="1"/><rect x="44" y="76" width="8" height="6" rx="1"/>
+              <rect x="4" y="85" width="8" height="6" rx="1"/><rect x="14" y="85" width="8" height="6" rx="1"/><rect x="24" y="85" width="8" height="6" rx="1"/><rect x="34" y="85" width="8" height="6" rx="1"/><rect x="44" y="85" width="8" height="6" rx="1"/>
+            </g>
+            <text x="28" y="99" font-family="Plus Jakarta Sans" font-size="5" fill="#c0392b" text-anchor="middle" opacity=".6">100 pumps</text>
+            <!-- Arrow zone with tangled lines -->
+            <g stroke="#c0392b" stroke-width=".4" opacity=".2">
+              <line x1="55" y1="8" x2="95" y2="20"/><line x1="55" y1="18" x2="100" y2="10"/><line x1="55" y1="28" x2="92" y2="40"/>
+              <line x1="55" y1="38" x2="98" y2="30"/><line x1="55" y1="48" x2="95" y2="55"/><line x1="55" y1="58" x2="100" y2="45"/>
+              <line x1="55" y1="68" x2="92" y2="72"/><line x1="55" y1="78" x2="98" y2="65"/><line x1="55" y1="88" x2="95" y2="82"/>
+              <line x1="55" y1="15" x2="97" y2="50"/><line x1="55" y1="45" x2="93" y2="15"/><line x1="55" y1="75" x2="96" y2="35"/>
+            </g>
+            <!-- 10x10 grid of tiny chips -->
+            <g fill="rgba(192,57,43,.04)" stroke="#c0392b" stroke-width=".4">
+              <rect x="92" y="4" width="7" height="5" rx=".5"/><rect x="101" y="4" width="7" height="5" rx=".5"/><rect x="110" y="4" width="7" height="5" rx=".5"/><rect x="119" y="4" width="7" height="5" rx=".5"/><rect x="128" y="4" width="7" height="5" rx=".5"/>
+              <rect x="92" y="12" width="7" height="5" rx=".5"/><rect x="101" y="12" width="7" height="5" rx=".5"/><rect x="110" y="12" width="7" height="5" rx=".5"/><rect x="119" y="12" width="7" height="5" rx=".5"/><rect x="128" y="12" width="7" height="5" rx=".5"/>
+              <rect x="92" y="20" width="7" height="5" rx=".5"/><rect x="101" y="20" width="7" height="5" rx=".5"/><rect x="110" y="20" width="7" height="5" rx=".5"/><rect x="119" y="20" width="7" height="5" rx=".5"/><rect x="128" y="20" width="7" height="5" rx=".5"/>
+              <rect x="92" y="28" width="7" height="5" rx=".5"/><rect x="101" y="28" width="7" height="5" rx=".5"/><rect x="110" y="28" width="7" height="5" rx=".5"/><rect x="119" y="28" width="7" height="5" rx=".5"/><rect x="128" y="28" width="7" height="5" rx=".5"/>
+              <rect x="92" y="36" width="7" height="5" rx=".5"/><rect x="101" y="36" width="7" height="5" rx=".5"/><rect x="110" y="36" width="7" height="5" rx=".5"/><rect x="119" y="36" width="7" height="5" rx=".5"/><rect x="128" y="36" width="7" height="5" rx=".5"/>
+            </g>
+            <text x="115" y="99" font-family="Plus Jakarta Sans" font-size="5" fill="#c0392b" text-anchor="middle" opacity=".6">100 chips</text>
+          </svg>
+        </div>
+        <p>Hundreds of pumps, chips, tubes. Quality control impossible. Cost prohibitive.</p>
+        <div class="status">Impossible ✕</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEAT 3: SCALE OUT -->
+<section class="beat bg-d">
+  <div class="bi bc reveal">
+    <h2>InfiniFluidics doesn't scale up.<br>We <span>scale out</span>.</h2>
+    <p>Borrowing from semiconductor logic, VLSMI integrates more units onto the chip itself. <strong style="color:var(--mb)">Throughput increases.</strong> Pumps stay the same. Tubing stays the same. <strong style="color:var(--mb)">Quality stays identical.</strong></p>
+
+    <div class="so-row">
+      <div class="so-col">
+        <div class="so-chip" style="width:50px;height:50px;grid-template-columns:1fr">
+          <div class="so-u" style="width:100%;height:100%;border-radius:4px"></div>
+        </div>
+        <div class="so-label">1×</div>
+        <div class="so-sub">Single unit</div>
+      </div>
+      <div class="so-arr">→</div>
+      <div class="so-col">
+        <div class="so-chip" style="width:84px;height:84px;grid-template-columns:repeat(3,1fr);gap:3px">
+          <div class="so-u"></div><div class="so-u"></div><div class="so-u"></div>
+          <div class="so-u"></div><div class="so-u"></div><div class="so-u"></div>
+          <div class="so-u"></div><div class="so-u"></div><div class="so-u"></div>
+        </div>
+        <div class="so-label">10×</div>
+        <div class="so-sub">Same chip format</div>
+      </div>
+      <div class="so-arr">→</div>
+      <div class="so-col">
+        <div class="so-chip" style="width:120px;height:120px;grid-template-columns:repeat(8,1fr);gap:2px" id="chip100"></div>
+        <div class="so-label">1,000×</div>
+        <div class="so-sub">Larger chip</div>
+      </div>
+      <div class="so-arr">→</div>
+      <div class="so-col">
+        <div class="so-chip" style="width:160px;height:160px;border-radius:50%;grid-template-columns:repeat(10,1fr);gap:1px" id="chipWafer"></div>
+        <div class="so-label">10,000×</div>
+        <div class="so-sub">Full wafer scale</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VLSMI FULL FORM -->
+<section class="beat bg-m" style="padding:48px 48px">
+  <div class="bi bc reveal">
+    <p style="font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:800;color:var(--tw);letter-spacing:.02em;line-height:1"><span style="color:var(--mb)">V</span>ery <span style="color:var(--mb)">L</span>arge <span style="color:var(--mb)">S</span>cale <span style="color:var(--mb)">M</span>icrofluidic <span style="color:var(--mb)">I</span>ntegration</p>
+    <p style="margin-top:10px;font-size:.95rem;color:var(--ts);font-weight:500">Thousands of microfluidic devices. One chip. One name.</p>
+  </div>
+</section>
+
+<!-- BEAT 4: BUILDING BLOCKS + CQA -->
+<section class="beat bg-w">
+  <div class="bi reveal">
+    <div style="text-align:center;margin-bottom:48px">
+      <h2>Modular generators. <span>Consistent quality.</span></h2>
+      <p style="margin:0 auto">The platform stays the same. Swap the generator for your application.</p>
+    </div>
+    <div class="bb-top">
+      <div class="bb-platform">
+        <img src="assets/logos/logo-infinifluidics.png" alt="InfiniFluidics" style="height:32px;margin:0 auto">
+        <div class="bb-plat-title">VLSMI Platform</div>
+        <div class="bb-plat-sub">The chip stays constant</div>
+      </div>
+      <div class="bb-right">
+        <div class="bb-plus">+</div>
+        <div class="bb-cards">
+          <div class="bb-card">
+            <div class="bb-icon"><svg width="24" height="24" fill="none" stroke="#0d5e4a" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="3" fill="rgba(29,184,133,.3)"/><path d="M4 12h2m12 0h2"/></svg></div>
+            <h4>LNP Generator</h4>
+          </div>
+          <div class="bb-card">
+            <div class="bb-icon"><svg width="24" height="24" fill="none" stroke="#0d5e4a" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="4" stroke-dasharray="3 2"/><circle cx="12" cy="12" r="2" fill="#0d5e4a" opacity=".3"/></svg></div>
+            <h4>Double Emulsion</h4>
+          </div>
+          <div class="bb-card">
+            <div class="bb-icon"><svg width="24" height="24" fill="none" stroke="#0d5e4a" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 5v14" stroke-dasharray="3 2"/><circle cx="9" cy="12" r="2" fill="rgba(29,184,133,.3)"/><circle cx="15" cy="12" r="2" fill="rgba(13,94,74,.3)"/></svg></div>
+            <h4>Janus</h4>
+          </div>
+          <div class="bb-card">
+            <div class="bb-icon"><svg width="24" height="24" fill="none" stroke="#0d5e4a" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="10" cy="10" r="2" fill="rgba(29,184,133,.25)"/><circle cx="14" cy="11" r="1.5" fill="rgba(29,184,133,.2)"/><circle cx="11" cy="14" r="1.8" fill="rgba(29,184,133,.2)"/><circle cx="14.5" cy="14.5" r="1" fill="rgba(29,184,133,.15)"/></svg></div>
+            <h4>Hydrogel</h4>
+          </div>
+          <div class="bb-card">
+            <div class="bb-icon"><svg width="24" height="24" fill="none" stroke="#0d5e4a" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M9 12h6M12 9v6"/></svg></div>
+            <h4>Custom</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cqa-wrap">
+      <div class="cqa-box">
+        <h4>Throughput scales linearly with units on chip. Quality stays constant.</h4>
+        <svg width="100%" viewBox="0 0 620 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Axes -->
+          <line x1="70" y1="195" x2="480" y2="195" stroke="#c8d8d0" stroke-width="1"/>
+          <line x1="70" y1="195" x2="70" y2="30" stroke="#c8d8d0" stroke-width="1"/>
+          <!-- Y-axis labels -->
+          <text x="60" y="192" font-family="Plus Jakarta Sans" font-size="12" fill="#6a8a7c" text-anchor="end" font-weight="600">0.001 L</text>
+          <text x="60" y="118" font-family="Plus Jakarta Sans" font-size="12" fill="#6a8a7c" text-anchor="end" font-weight="600">1 L</text>
+          <text x="60" y="44" font-family="Plus Jakarta Sans" font-size="12" fill="#6a8a7c" text-anchor="end" font-weight="600">10 L</text>
+          <!-- Y-axis title -->
+          <text x="18" y="115" font-family="Plus Jakarta Sans" font-size="11" fill="#8aaa9c" text-anchor="middle" transform="rotate(-90 18 115)" font-weight="600">Throughput (L/hr)</text>
+          <!-- Grid lines -->
+          <line x1="70" y1="112" x2="480" y2="112" stroke="#e8efe8" stroke-width=".5"/>
+          <line x1="70" y1="38" x2="480" y2="38" stroke="#e8efe8" stroke-width=".5"/>
+          <!-- X-axis label -->
+          <text x="275" y="232" font-family="Plus Jakarta Sans" font-size="12" fill="#8aaa9c" text-anchor="middle" font-weight="600">Scale (units on chip)</text>
+          <!-- X ticks -->
+          <text x="100" y="215" font-family="Plus Jakarta Sans" font-size="11" fill="#6a8a7c" text-anchor="middle" font-weight="600">1×</text>
+          <text x="210" y="215" font-family="Plus Jakarta Sans" font-size="11" fill="#6a8a7c" text-anchor="middle" font-weight="600">10×</text>
+          <text x="340" y="215" font-family="Plus Jakarta Sans" font-size="11" fill="#6a8a7c" text-anchor="middle" font-weight="600">100×</text>
+          <text x="460" y="215" font-family="Plus Jakarta Sans" font-size="11" fill="#6a8a7c" text-anchor="middle" font-weight="600">10,000×</text>
+          <!-- Throughput curve -->
+          <path d="M100 185 Q190 175 265 140 Q340 95 460 42" stroke="#1db885" stroke-width="3" fill="none" stroke-linecap="round" class="draw-line" style="stroke-dasharray:600;stroke-dashoffset:600"/>
+          <circle cx="460" cy="42" r="5" fill="#1db885" class="dot-pop" style="opacity:0"/>
+          <text x="480" y="38" font-family="Plus Jakarta Sans" font-size="13" fill="#1db885" font-weight="700" class="dot-pop" style="opacity:0">Throughput ↑</text>
+          <!-- CQA line - flat -->
+          <path d="M100 92 L460 92" stroke="#0d5e4a" stroke-width="3" stroke-dasharray="8 5" fill="none" class="draw-line" style="stroke-dasharray:400;stroke-dashoffset:400"/>
+          <circle cx="460" cy="92" r="5" fill="#0d5e4a" class="dot-pop" style="opacity:0"/>
+          <text x="480" y="96" font-family="Plus Jakarta Sans" font-size="13" fill="#0d5e4a" font-weight="700" class="dot-pop" style="opacity:0">CQAs (constant)</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEAT 5: THE WAFER -->
+<section class="beat bg-c">
+  <div class="bi bc reveal">
+    <h2>10,260 generators. <span>Fits in your pocket.</span></h2>
+    <p>Originally developed at the University of Pennsylvania in <strong style="color:var(--teal);font-weight:800">2018</strong>, the VLSMI platform has been refined through multiple generations. One chip. One inlet. One outlet. Thousands of identical particles.</p>
+    <div class="wf">
+      <div class="wf-frame">
+        <img src="assets/tech/vlsmi-wafer.png" alt="VLSMI wafer with 10,260 generators">
+      </div>
+      <div class="wf-cap">VLSMI silicon wafer (Gen 4, 2018). Quarter for scale. Developed at Penn.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>Ready to put this technology to <span>work</span>?</h2>
+  <p>From discovery through commercial GMP, VLSMI grows with you.</p>
+  <a href="index.html#contact" class="btn">Get in Touch →</a>
+</section>
+
+<footer class="footer">
+  <div class="fl"><img src="assets/logos/logo-infinifluidics.png" alt="InfiniFluidics"></div>
+  <div>© 2026 InfiniFluidics. All rights reserved.</div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Animate CQA graph on scroll
+const graphObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('animated'); graphObs.unobserve(e.target); } });
+}, { threshold: 0.4 });
+document.querySelectorAll('.cqa-box').forEach(el => graphObs.observe(el));
+
+function fillGrid(id, cols) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  for (let i = 0; i < cols * cols; i++) {
+    const u = document.createElement('div');
+    u.className = 'so-u';
+    el.appendChild(u);
+  }
+}
+fillGrid('chip100', 8);
+fillGrid('chipWafer', 10);
+</script>
+</body>
+</html>

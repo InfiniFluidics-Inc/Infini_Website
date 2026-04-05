@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News & Publications | InfiniFluidics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--td:#061f19;--tm:#082e24;--teal:#0d5e4a;--mint:#1db885;--mb:#2ef5a8;--gold:#ffd166;--cream:#f6faf8;--w:#fff;--tw:#f2f9f6;--ts:rgba(255,255,255,.72);--tmute:rgba(255,255,255,.35);--dk:#14302a;--mid:#4a6b60;--bs:rgba(255,255,255,.08);--font:'Plus Jakarta Sans',-apple-system,sans-serif}
+html{scroll-behavior:smooth}body{font-family:var(--font);background:var(--w);color:var(--dk);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
+
+.nav{position:sticky;top:0;z-index:100;background:rgba(6,31,25,.95);backdrop-filter:blur(20px);height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;box-shadow:0 4px 30px rgba(0,0,0,.2)}
+.nav-logo{display:flex;align-items:center;background:var(--w);border-radius:16px;padding:10px 20px;box-shadow:0 4px 24px rgba(0,0,0,.2)}
+.nav-logo img{height:50px}
+.nl{display:flex;align-items:center;gap:28px;list-style:none}
+.nl a{font-size:.9rem;font-weight:500;color:rgba(255,255,255,.75);transition:color .2s}
+.nl a:hover{color:var(--mb)}
+.nc{padding:11px 26px!important;background:var(--mint)!important;color:var(--w)!important;border-radius:10px;font-weight:700!important}
+.nt{display:none;flex-direction:column;gap:5px;cursor:pointer}.nt span{display:block;width:22px;height:2px;background:#fff}
+
+.page-hdr{background:var(--tm);color:var(--tw);padding:100px 48px 56px;position:relative;overflow:hidden}
+.page-hdr::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(29,184,133,.1),transparent 70%);pointer-events:none}
+.page-hdr-in{max-width:1200px;margin:0 auto;position:relative}
+.back{display:inline-flex;align-items:center;gap:6px;font-size:.9rem;color:var(--mb);margin-bottom:20px;font-weight:600}
+.back:hover{text-decoration:underline}
+.page-hdr h1{font-size:clamp(2rem,4vw,3rem);font-weight:800;margin-bottom:10px}
+.page-hdr h1 span{background:linear-gradient(135deg,var(--mb),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.page-hdr p{font-size:1.05rem;color:var(--ts);max-width:540px}
+
+.tabs-wrap{max-width:1200px;margin:0 auto;padding:0 48px}
+.tabs{display:flex;gap:0;border-bottom:2px solid #e0ece6;margin-top:40px}
+.tab{padding:14px 32px;font-size:.95rem;font-weight:700;color:var(--mid);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;font-family:var(--font)}
+.tab:hover{color:var(--teal)}
+.tab.active{color:var(--teal);border-bottom-color:var(--mint)}
+.tab-content{display:none;padding:40px 0 80px}
+.tab-content.active{display:block}
+
+/* PRESS CARDS - vertical with image on top */
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.news-card{display:block;background:var(--cream);border:1.5px solid #e0ece6;border-radius:18px;transition:all .35s;text-decoration:none;color:var(--dk);overflow:hidden}
+.news-card:hover{border-color:var(--mint);transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.07)}
+.news-card:hover h3{color:var(--teal)}
+.card-img{width:100%;height:180px;object-fit:cover;background:linear-gradient(135deg,#d4e5dd,#b8d4c8)}
+.card-fallback{width:100%;height:180px;display:none;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--teal),var(--mint));color:var(--w);font-size:1.6rem;font-weight:800;letter-spacing:.05em}
+.card-body{padding:22px 24px 26px}
+.card-src{font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mint);margin-bottom:8px}
+.news-card h3{font-size:.95rem;font-weight:700;color:var(--dk);line-height:1.4;margin-bottom:8px;transition:color .2s}
+.news-card p{font-size:.9rem;color:var(--mid);line-height:1.55}
+.news-card .meta{font-size:.82rem;color:#8aaa9c;margin-top:10px}
+
+/* PUB CARDS */
+.pub-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.pub-card{display:block;padding:28px;background:var(--cream);border:1.5px solid #e0ece6;border-radius:16px;transition:all .35s;text-decoration:none;color:var(--dk);border-left:4px solid var(--teal)}
+.pub-card:hover{border-color:var(--mint);transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.06)}
+.pub-card:hover h3{color:var(--teal)}
+.pub-card .journal{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);margin-bottom:8px}
+.pub-card h3{font-size:.95rem;font-weight:700;color:var(--dk);line-height:1.45;margin-bottom:8px;transition:color .2s}
+.pub-card .authors{font-size:.88rem;color:var(--mid);margin-bottom:8px;line-height:1.45}
+.pub-card .authors strong{color:var(--teal);font-weight:700}
+.pub-card .desc{font-size:.9rem;color:var(--mid);line-height:1.55}
+.pub-card .doi{font-size:.82rem;color:#8aaa9c;margin-top:10px}
+
+.footer{background:#041a14;padding:36px 48px;display:flex;align-items:center;justify-content:space-between;font-size:.82rem;color:var(--tmute)}
+.fl{display:flex;align-items:center;background:var(--w);border-radius:14px;padding:8px 16px}
+.fl img{height:32px}
+
+@media(max-width:900px){.news-grid{grid-template-columns:repeat(2,1fr)}.pub-grid{grid-template-columns:1fr}}
+@media(max-width:680px){
+.nav{padding:0 20px;height:72px}.nl{display:none}.nt{display:flex}
+.page-hdr{padding:80px 20px 40px}.tabs-wrap{padding:0 20px}
+.tab{padding:12px 20px;font-size:.88rem}
+.news-grid{grid-template-columns:1fr}
+.footer{flex-direction:column;gap:10px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo"><img src="assets/logos/logo-infinifluidics.png" alt="InfiniFluidics"></a>
+  <ul class="nl" id="navLinks">
+    <li><a href="index.html#pipeline">About</a></li>
+    <li><a href="technology.html">Technology</a></li>
+    <li><a href="index.html#particles">Platform</a></li>
+    <li><a href="index.html#team">Team</a></li>
+    <li><a href="news.html">News</a></li>
+    <li><a href="index.html#contact" class="nc">Get in Touch</a></li>
+  </ul>
+  <div class="nt" onclick="document.getElementById('navLinks').classList.toggle('active')"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-hdr">
+  <div class="page-hdr-in">
+    <a href="index.html" class="back">← Back to Home</a>
+    <h1>News & <span>Publications</span></h1>
+    <p>Press coverage, research publications, and the latest from InfiniFluidics and our collaborators.</p>
+  </div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('press')">Press</button>
+    <button class="tab" onclick="switchTab('pubs')">Publications</button>
+  </div>
+
+  <!-- PRESS TAB -->
+  <div class="tab-content active" id="tab-press">
+    <div class="news-grid">
+
+      <a class="news-card" href="https://airfoundry.upenn.edu/celebrating-innovation-and-collaboration-2nd-annual-meeting-facility-grand-opening/" target="_blank">
+        <img class="card-img" src="https://airfoundry.upenn.edu/wp-content/uploads/2025/07/P1244905-scaled.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="card-fallback">AIR</div>
+        <div class="card-body">
+          <div class="card-src">AIRFoundry</div>
+          <h3>2nd Annual Meeting & Facility Grand Opening</h3>
+          <p>AIRFoundry celebrates its facility grand opening, highlighting advances in RNA manufacturing and InfiniFluidics' role.</p>
+          <div class="meta">2026</div>
+        </div>
+      </a>
+
+      <a class="news-card" href="https://www.seas.upenn.edu/stories/melding-ai-and-rna-penns-18-million-airfoundry-to-revolutionize-rna-research/" target="_blank">
+        <img class="card-img" src="https://blog.seas.upenn.edu/wp-content/uploads/2024/09/AIRFoundry-768x513.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="card-fallback">PENN</div>
+        <div class="card-body">
+          <div class="card-src">Penn Engineering</div>
+          <h3>$18M NSF AIRFoundry to Revolutionize RNA Research</h3>
+          <p>NSF-funded BioFoundry integrating AI, microfluidics, and RNA science. InfiniFluidics is a core manufacturing partner.</p>
+          <div class="meta">September 2024</div>
+        </div>
+      </a>
+
+      <a class="news-card" href="https://www.seas.upenn.edu/stories/penn-engineers-secure-wellcome-leap-contract-for-lipid-nanoparticle-research-essential-in-delivery-of-rna-therapies/" target="_blank">
+        <img class="card-img" src="https://blog.seas.upenn.edu/wp-content/uploads/2022/02/Mitchell-Wellcome-Leap-768x576.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="card-fallback">PENN</div>
+        <div class="card-body">
+          <div class="card-src">Penn Engineering</div>
+          <h3>Penn Engineers Secure Wellcome Leap Contract for Lipid Nanoparticle Research</h3>
+          <p>Multi-million dollar contract under the $60M RNA Readiness + Response program for on-demand LNP manufacturing.</p>
+          <div class="meta">February 2022</div>
+        </div>
+      </a>
+
+      <a class="news-card" href="https://www.koreabiomed.com/news/articleView.html?idxno=12586" target="_blank">
+        <img class="card-img" src="https://cdn.koreabiomed.com/news/photo/202111/12586_10752_1538.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="card-fallback">KBR</div>
+        <div class="card-body">
+          <div class="card-src">Korea Biomedical Review</div>
+          <h3>COREE Partners with Infini Fluidics to Develop New mRNA Vaccine-Making Method</h3>
+          <p>COREE and InfiniFluidics collaborate on advanced microfluidic manufacturing technology for mRNA vaccine production.</p>
+          <div class="meta">November 2021</div>
+        </div>
+      </a>
+
+      <a class="news-card" href="https://www.seas.upenn.edu/stories/with-a-liquid-assembly-line-penn-researchers-produce-mrna-delivering-nanoparticles-a-hundred-times-faster-than-standard-microfluidic-technologies/" target="_blank">
+        <img class="card-img" src="https://blog.seas.upenn.edu/wp-content/uploads/2021/06/VLSMI-768x576.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="card-fallback">PENN</div>
+        <div class="card-body">
+          <div class="card-src">Penn Engineering</div>
+          <h3>With a 'Liquid Assembly Line,' Penn Researchers Produce mRNA-Delivering Nanoparticles 100× Faster</h3>
+          <p>128 parallel mixing channels produce LNPs with 4-5× greater activity in mice. VLSMI platform enables industrial-scale mRNA therapeutics.</p>
+          <div class="meta">June 2021</div>
+        </div>
+      </a>
+
+      <a class="news-card" href="https://penntoday.upenn.edu/news/faster-way-make-drug-microparticles" target="_blank">
+        <img class="card-img" src="https://penntoday.upenn.edu/sites/default/files/2018-05/IssadoreYadavali-600.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="card-fallback">PENN</div>
+        <div class="card-body">
+          <div class="card-src">Penn Today</div>
+          <h3>A Faster Way to Make Drug Microparticles</h3>
+          <p>Yadavali and Issadore introduce the VLSMI chip: 10,260 generators producing 1 trillion+ droplets per hour.</p>
+          <div class="meta">May 2018</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- PUBLICATIONS TAB -->
+  <div class="tab-content" id="tab-pubs">
+    <div class="pub-grid">
+
+      <a class="pub-card" href="https://advanced.onlinelibrary.wiley.com/doi/10.1002/adfm.202309718" target="_blank">
+        <div class="journal">Advanced Functional Materials, 2024</div>
+        <h3>Micro-Patterning Wettability in Very Large Scale Microfluidic Integrated Chips for Double Emulsion Generation</h3>
+        <div class="authors">Wu YH, Yadavali S, Lee D, Issadore D</div>
+        <div class="desc">Lithographic wettability patterning for silicon/glass VLSMI chips, enabling both W/O/W and O/W/O double emulsions with parallelized generation at scale.</div>
+        <div class="doi">DOI: 10.1002/adfm.202309718</div>
+      </a>
+
+      <a class="pub-card" href="https://pubs.acs.org/doi/10.1021/acs.nanolett.1c01353" target="_blank">
+        <div class="journal">Nano Letters, 2021</div>
+        <h3>Scalable mRNA and siRNA Lipid Nanoparticle Production Using a Parallelized Microfluidic Device</h3>
+        <div class="authors">Shepherd SJ, Warzecha CC, Yadavali S, El-Mayta R, Alameh MG, Wang L, Weissman D, Wilson JM, Issadore D, Mitchell MJ</div>
+        <div class="desc">VLSMI for LNP production with 128 parallel mixing channels. 100x throughput increase. 4-5x greater activity in mouse studies versus conventional methods.</div>
+        <div class="doi">DOI: 10.1021/acs.nanolett.1c01353</div>
+      </a>
+
+      <a class="pub-card" href="https://pubs.acs.org/doi/10.1021/acssuschemeng.0c04929" target="_blank">
+        <div class="journal">ACS Sustainable Chemistry & Engineering, 2020</div>
+        <h3>Scalable Synthesis of Janus Particles with High Naturality</h3>
+        <div class="authors">Lan Y, Wu J, Han SH, Yadavali S, Issadore D, Stebe KJ, Lee D</div>
+        <div class="desc">Scalable synthesis of plant-derived Janus particles using single-emulsion polymerization, demonstrated at scale with a VLSMI silicon-glass microfluidic device.</div>
+        <div class="doi">DOI: 10.1021/acssuschemeng.0c04929</div>
+      </a>
+
+      <a class="pub-card" href="https://pubs.rsc.org/en/content/articlelanding/2019/lc/c8lc01267a" target="_blank">
+        <div class="journal">Lab on a Chip, 2019</div>
+        <h3>Large-Scale Production of Compound Bubbles Using Parallelized Microfluidics for Efficient Extraction of Metal Ions</h3>
+        <div class="authors">Jeong HH, Chen Z, Yadavali S, Xu J, Issadore D, Lee D</div>
+        <div class="desc">Parallelized microfluidic production of compound bubbles at scale for efficient metal ion extraction applications.</div>
+        <div class="doi">DOI: 10.1039/C8LC01267A</div>
+      </a>
+
+      <a class="pub-card" href="https://www.nature.com/articles/s41598-019-48515-4" target="_blank">
+        <div class="journal">Scientific Reports, 2019</div>
+        <h3>Robust Microfabrication of Highly Parallelized Three-Dimensional Microfluidics on Silicon</h3>
+        <div class="authors">Yadavali S, Lee D, Issadore D</div>
+        <div class="desc">Robust 3D microfabrication method for highly parallel microfluidics on silicon, enabling simultaneous operation of thousands of devices on a single chip.</div>
+        <div class="doi">DOI: 10.1038/s41598-019-48515-4</div>
+      </a>
+
+      <a class="pub-card" href="https://www.nature.com/articles/s41467-018-03515-2" target="_blank">
+        <div class="journal">Nature Communications, 2018</div>
+        <h3>Silicon and Glass Very Large Scale Microfluidic Droplet Integration for Terascale Generation of Polymer Microparticles</h3>
+        <div class="authors">Yadavali S, Jeong HH, Lee D, Issadore D</div>
+        <div class="desc">Introduced the VLSMI platform: 10,260 flow-focusing generators on a single silicon wafer producing 1 trillion+ droplets per hour with CV below 3%.</div>
+        <div class="doi">DOI: 10.1038/s41467-018-03515-2</div>
+      </a>
+
+      <a class="pub-card" href="https://pubs.acs.org/doi/10.1021/acs.chemmater.7b05043" target="_blank">
+        <div class="journal">Chemistry of Materials, 2018</div>
+        <h3>Moldable Perfluoropolyether–PEG Networks with Tunable Wettability and Solvent Resistance for Rapid Prototyping of Droplet Microfluidics</h3>
+        <div class="authors">Jeong HH, Yadavali S, Issadore D, Lee D</div>
+        <div class="desc">Solvent-resistant PFPE-PEG elastomer networks enabling both W/O and O/W emulsion generation in microfluidic devices with organic solvents.</div>
+        <div class="doi">DOI: 10.1021/acs.chemmater.7b05043</div>
+      </a>
+
+      <a class="pub-card" href="https://pubs.rsc.org/en/content/articlelanding/2017/lc/c7lc00295e" target="_blank">
+        <div class="journal">Lab on a Chip, 2017</div>
+        <h3>Liter-Scale Production of Uniform Gas Bubbles via Parallelization of Flow-Focusing Generators</h3>
+        <div class="authors">Jeong HH, Yadavali S, Issadore D, Lee D</div>
+        <div class="desc">Parallelized flow-focusing generators for liter-scale production of highly uniform gas bubbles with applications in functional materials synthesis.</div>
+        <div class="doi">DOI: 10.1039/C7LC00295E</div>
+      </a>
+
+      <a class="pub-card" href="https://pubs.rsc.org/en/content/articlelanding/2015/lc/c5lc01025j" target="_blank">
+        <div class="journal">Lab on a Chip, 2015</div>
+        <h3>Kilo-Scale Droplet Generation in Three-Dimensional Monolithic Elastomer Device (3D MED)</h3>
+        <div class="authors">Jeong HH, Yelleswarapu VR, Yadavali S, Issadore D, Lee D</div>
+        <div class="desc">Early demonstration of kilo-scale parallelized droplet generation using a 3D monolithic elastomer device, a precursor to the VLSMI platform.</div>
+        <div class="doi">DOI: 10.1039/C5LC01025J</div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="fl"><img src="assets/logos/logo-infinifluidics.png" alt="InfiniFluidics"></div>
+  <div>© 2026 InfiniFluidics. All rights reserved.</div>
+</footer>
+
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

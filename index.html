@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InfiniFluidics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--td:#061f19;--tm:#082e24;--teal:#0d5e4a;--mint:#1db885;--mb:#2ef5a8;--gold:#ffd166;--cream:#f6faf8;--w:#fff;--tw:#f2f9f6;--ts:rgba(255,255,255,.72);--tmute:rgba(255,255,255,.35);--dk:#14302a;--mid:#4a6b60;--bs:rgba(255,255,255,.08);--font:'Plus Jakarta Sans',-apple-system,sans-serif}
+html{scroll-behavior:smooth}body{font-family:var(--font);background:var(--td);color:var(--tw);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;height:80px;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 48px;transition:all .4s}
+.nav.scrolled{background:rgba(6,31,25,.94);backdrop-filter:blur(20px);box-shadow:0 4px 30px rgba(0,0,0,.3)}
+.nav-logo{display:flex;align-items:center;background:var(--w);border-radius:16px;padding:10px 20px;box-shadow:0 4px 24px rgba(0,0,0,.2);transition:transform .2s}
+.nav-logo:hover{transform:scale(1.03)}
+.nav-logo img{height:50px}
+.nl{display:flex;align-items:center;gap:28px;list-style:none}
+.nl a{font-size:.9rem;font-weight:500;color:rgba(255,255,255,.75);transition:color .2s}
+.nl a:hover{color:var(--mb)}
+.nc{padding:11px 26px!important;background:var(--mint)!important;color:var(--w)!important;border-radius:10px;font-weight:700!important;transition:all .25s!important;box-shadow:0 4px 18px rgba(29,184,133,.35)}
+.nc:hover{background:var(--mb)!important;transform:translateY(-1px)}
+.nt{display:none;flex-direction:column;gap:5px;cursor:pointer}.nt span{display:block;width:22px;height:2px;background:#fff}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.18}
+.hero-ov{position:absolute;inset:0;background:linear-gradient(160deg,rgba(8,46,36,.4),rgba(6,31,25,.2) 50%,rgba(6,31,25,.95))}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;animation:fl 10s ease-in-out infinite}
+.o1{width:500px;height:500px;background:rgba(29,184,133,.1);top:-80px;right:-80px}
+.o2{width:350px;height:350px;background:rgba(255,209,102,.05);bottom:10%;left:-50px;animation-delay:4s}
+@keyframes fl{0%,100%{transform:translate(0,0)}50%{transform:translate(25px,-25px)}}
+.hero-in{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:150px 48px 100px}
+.hb{display:inline-flex;align-items:center;gap:10px;padding:10px 22px;border-radius:100px;background:rgba(29,184,133,.1);border:1px solid rgba(29,184,133,.2);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mb);margin-bottom:28px;animation:fu .7s ease both}
+.hb::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--mb);box-shadow:0 0 12px var(--mb);animation:pu 2s ease infinite}
+@keyframes pu{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-size:clamp(2.8rem,6vw,4.8rem);font-weight:800;line-height:1.05;max-width:780px;margin-bottom:24px;animation:fu .7s ease .1s both}
+.hero h1 span{background:linear-gradient(135deg,var(--mb),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(1.05rem,1.6vw,1.2rem);color:var(--ts);max-width:520px;line-height:1.8;margin-bottom:16px;animation:fu .7s ease .2s both}
+.hero-highlight{display:inline-block;padding:10px 28px;background:rgba(29,184,133,.15);border:1px solid rgba(29,184,133,.3);border-radius:12px;font-size:clamp(1.1rem,1.8vw,1.35rem);font-weight:700;color:var(--mb);letter-spacing:.03em;margin-bottom:36px;animation:fu .7s ease .25s both}
+.ha{display:flex;gap:14px;flex-wrap:wrap;animation:fu .7s ease .3s both}
+.bg{display:inline-flex;align-items:center;gap:8px;padding:16px 34px;background:linear-gradient(135deg,var(--mint),#17a077);color:var(--w);border-radius:14px;font-size:1rem;font-weight:700;transition:all .3s;border:none;cursor:pointer;box-shadow:0 8px 30px rgba(29,184,133,.35)}
+.bg:hover{transform:translateY(-3px);box-shadow:0 12px 44px rgba(29,184,133,.45);background:linear-gradient(135deg,var(--mb),var(--mint))}
+.bgh{display:inline-flex;align-items:center;gap:8px;padding:16px 34px;background:rgba(255,255,255,.06);color:var(--w);border:1.5px solid rgba(255,255,255,.15);border-radius:14px;font-size:1rem;font-weight:600;transition:all .3s;cursor:pointer;backdrop-filter:blur(8px)}
+.bgh:hover{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.1)}
+@keyframes fu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══ PIPELINE (white) ═══ */
+.pipeline{background:var(--w);padding:120px 48px 100px;color:var(--dk);text-align:center;position:relative}
+.pipeline::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--mint),var(--teal),var(--mb),var(--gold))}
+.label{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+.pipeline .label{color:var(--teal)}
+.pipeline h2{font-size:clamp(2rem,3.5vw,3rem);font-weight:800;margin-bottom:10px;color:var(--dk)}
+.pipeline h2 span{color:var(--teal)}
+.pipeline .tag{font-size:1.15rem;color:var(--mid);margin-bottom:56px}
+
+/* Animated scaling visual */
+.scale-visual{max-width:940px;margin:0 auto 56px;position:relative}
+.scale-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px;margin-bottom:24px}
+.scale-card{border:2px solid #e0ece6;border-radius:24px;padding:36px 24px 28px;background:var(--cream);text-align:center;transition:all .4s;position:relative;overflow:hidden}
+.scale-card:hover{border-color:var(--mint);transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.06)}
+.sc-icon{margin-bottom:16px;color:var(--teal)}
+.scale-card h3{font-size:1.2rem;font-weight:800;color:var(--dk);margin-bottom:10px}
+.scale-card p{font-size:.96rem;color:var(--mid);line-height:1.6;margin-bottom:18px}
+/* Chip scaling visualization */
+.chip-vis{padding:16px;background:rgba(13,94,74,.04);border-radius:14px;display:flex;align-items:center;justify-content:center;gap:5px;min-height:72px;flex-wrap:wrap}
+.chip-unit{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:5px;background:var(--mint);color:var(--w);font-size:.55rem;font-weight:800;opacity:0;animation:chipPop .35s ease forwards}
+@keyframes chipPop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.chip-count{font-size:.84rem;font-weight:700;color:var(--teal);margin-top:8px;text-align:center;letter-spacing:.03em}
+
+/* Flow arrow */
+.flow-arrow{max-width:940px;margin:8px auto 8px;text-align:center;position:relative}
+.flow-label{font-size:.92rem;font-weight:600;color:var(--teal);margin-top:4px;letter-spacing:.02em}
+
+/* Unified bar */
+.unified-bar{max-width:940px;margin:0 auto;padding:24px 36px;background:linear-gradient(135deg,var(--teal),var(--mint));border-radius:16px;color:var(--w);font-size:1.05rem;font-weight:700;display:flex;align-items:center;justify-content:center;gap:12px}
+.unified-bar svg{flex-shrink:0}
+.btn-tech{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:var(--w);color:var(--teal);border:2px solid var(--teal);border-radius:14px;font-size:.95rem;font-weight:700;transition:all .3s;cursor:pointer}
+.btn-tech:hover{background:var(--teal);color:var(--w);transform:translateY(-2px);box-shadow:0 8px 24px rgba(13,94,74,.2)}
+
+/* ═══ PARTICLES (dark) ═══ */
+.particles{background:var(--tm);padding:120px 48px;text-align:center;position:relative;overflow:hidden}
+.particles .label{color:var(--mb)}
+.particles h2{font-size:clamp(2rem,3.5vw,3rem);font-weight:800;margin-bottom:8px}
+.particles h2 span{background:linear-gradient(135deg,var(--mb),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.particles .sub{font-size:1.1rem;color:var(--ts);margin-bottom:64px}
+.p-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;max-width:1000px;margin:0 auto 64px}
+.p-card{padding:28px 16px;background:rgba(255,255,255,.04);border:1px solid var(--bs);border-radius:20px;transition:all .4s;text-align:center}
+.p-card:hover{border-color:rgba(29,184,133,.3);transform:translateY(-6px);background:rgba(255,255,255,.08);box-shadow:0 16px 48px rgba(0,0,0,.2)}
+.p-img{width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 14px;border:2px solid rgba(29,184,133,.2);transition:border-color .3s}
+.p-card:hover .p-img{border-color:var(--mint)}
+.p-card h4{font-size:.95rem;font-weight:700;color:var(--tw)}
+
+.yf{max-width:680px;margin:0 auto;padding:44px;border:2px solid rgba(29,184,133,.2);border-radius:24px;background:rgba(29,184,133,.04)}
+.yf{text-align:center;margin-top:56px}
+.yf h3{font-size:clamp(1.4rem,2.8vw,2rem);font-weight:800;margin-bottom:0}
+.yf h3 em{font-style:normal;color:var(--mb)}
+.infini-tiles{display:flex;align-items:stretch;justify-content:center;gap:20px;margin:32px auto 0;max-width:860px}
+.inf-tile{flex:1;padding:36px 32px;border-radius:20px;position:relative;overflow:hidden;transition:transform .3s}
+.inf-tile:hover{transform:translateY(-4px)}
+.inf-screen{background:linear-gradient(145deg,#0a3d30,#0d5e4a,#12735c);border:1.5px solid rgba(29,184,133,.25)}
+.inf-mfg{background:linear-gradient(145deg,#2a1f00,#4a3500,#5c4400);border:1.5px solid rgba(255,209,102,.25)}
+.inf-step{font-size:2.4rem;font-weight:800;line-height:1;margin-bottom:14px;opacity:.25}
+.inf-screen .inf-step{color:var(--mb)}
+.inf-mfg .inf-step{color:var(--gold)}
+.inf-tile h3{font-size:1.15rem;font-weight:800;color:var(--tw);margin-bottom:12px;line-height:1.3}
+.inf-tile p{font-size:.95rem;color:var(--ts);line-height:1.6;max-width:none}
+.inf-arrow{font-size:2.2rem;color:var(--mb);font-weight:300;flex-shrink:0;align-self:center}
+.inf-no{font-weight:700;white-space:nowrap}
+.inf-no-g{color:var(--mb)}
+.inf-no-y{color:var(--gold)}
+
+/* PATENT BANNER */
+.patent-banner{background:var(--w);padding:52px 48px}
+.patent-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:40px}
+.patent-shields{display:flex;align-items:center;gap:24px;flex-shrink:0}
+.patent-shields img{height:60px;width:auto;object-fit:contain}
+.patent-title{font-size:1.15rem;font-weight:700;color:var(--dk);white-space:nowrap}
+
+/* ═══ BIG NUMBERS ═══ */
+.bignums{background:linear-gradient(135deg,var(--teal),var(--tm),#0a4035);padding:80px 48px;position:relative;overflow:hidden}
+.bignums::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M20 20h20v20H20z'/%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+.bn-row{display:flex;justify-content:center;gap:100px;flex-wrap:wrap;max-width:900px;margin:0 auto;position:relative}
+.bn{text-align:center}
+.bn-n{font-size:clamp(2.8rem,5vw,4rem);font-weight:800;color:var(--w);line-height:1}
+.bn-t{font-size:.93rem;color:rgba(255,255,255,.6);max-width:180px;margin:6px auto 0;line-height:1.4;text-align:center}
+
+/* ═══ FOUNDERS ═══ */
+.founders{background:var(--td);padding:110px 48px}
+.founders .label{color:var(--mb);text-align:center}
+.founders h2{font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:800;margin-bottom:12px;text-align:center}
+.founders h2 span{background:linear-gradient(135deg,var(--mb),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.founders>.mx>p{font-size:1.05rem;color:var(--ts);max-width:520px;margin:0 auto 52px;text-align:center;line-height:1.7}
+.founders .reveal>p{font-size:1.05rem;color:var(--ts);max-width:520px;margin:0 auto 52px;text-align:center;line-height:1.7}
+.fg{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:960px;margin:0 auto}
+.fc{text-align:center;padding:40px 24px;background:rgba(255,255,255,.04);border:1px solid var(--bs);border-radius:20px;transition:all .35s}
+.fc:hover{border-color:rgba(29,184,133,.25);transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,.2)}
+.fc img{width:140px;height:140px;border-radius:50%;object-fit:cover;margin:0 auto 18px;border:3px solid rgba(29,184,133,.2);transition:border-color .3s}
+.fc:hover img{border-color:var(--mint)}
+.fc h4{font-size:1.08rem;font-weight:700;margin-bottom:3px}
+.fc .role{font-size:.9rem;color:var(--mb);font-weight:600;margin-bottom:10px}
+.fc .bio{font-size:.9rem;color:var(--ts);line-height:1.6}
+.tc{text-align:center;margin-top:40px}
+
+/* ═══ PARTNERS ═══ */
+.partners{background:var(--w);padding:110px 48px;color:var(--dk)}
+.partners .label{color:var(--teal);text-align:center}
+.partners h2{font-size:clamp(1.8rem,3vw,2.4rem);font-weight:800;text-align:center;margin-bottom:52px;color:var(--dk)}
+.partners h2 span{color:var(--teal)}
+.lr{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1000px;margin:0 auto}
+.lb{display:flex;align-items:center;justify-content:center;padding:36px 28px;background:var(--cream);border:1.5px solid #e0ece6;border-radius:18px;min-height:130px;transition:all .35s}
+.lb:hover{border-color:var(--mint);box-shadow:0 8px 28px rgba(0,0,0,.06);transform:translateY(-3px)}
+.lb img{max-height:72px;max-width:200px;object-fit:contain}
+.lb.big img{max-height:96px;max-width:260px}
+
+/* NEWS TEASER */
+.news-teaser{background:var(--tm);padding:72px 48px;border-top:1px solid var(--bs)}
+
+/* CONTACT + ANIM */
+.ca-wrap{background:#e8f5f0;padding:100px 48px}
+.ca{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1200px;margin:0 auto}
+.ca-left .label{color:var(--teal)}
+.ca-left h2{font-size:clamp(1.6rem,2.8vw,2.4rem);font-weight:800;margin-bottom:14px;color:var(--dk)}
+.ca-left h2 span{color:var(--teal)}
+.cyc{display:inline-block;background:linear-gradient(135deg,var(--mint),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ca-left>p{font-size:1rem;color:var(--mid);margin-bottom:28px;line-height:1.7}
+.cf{display:flex;flex-direction:column;gap:12px}
+.fr{display:flex;gap:12px}
+.cf input,.cf textarea{width:100%;padding:13px 16px;background:var(--w);border:1.5px solid #d4e5dd;border-radius:10px;color:var(--dk);font-family:var(--font);font-size:.9rem;outline:none;transition:all .25s}
+.cf input::placeholder,.cf textarea::placeholder{color:#8aaa9c}
+.cf input:focus,.cf textarea:focus{border-color:var(--mint);box-shadow:0 0 0 3px rgba(29,184,133,.1)}
+.cf textarea{resize:vertical;min-height:100px}
+.cf .bg{align-self:flex-start}
+.ca-alt{margin-top:16px;font-size:.85rem;color:var(--mid)}
+.ca-alt a{color:var(--teal);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.accel{text-align:center;margin-top:48px;font-size:clamp(1.4rem,2.5vw,2rem);font-weight:800;color:var(--teal)}
+.accel span{background:linear-gradient(135deg,var(--mint),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ca-right iframe{width:100%;height:380px;border:none;border-radius:20px;background:#e8f5f0}
+
+/* FOOTER */
+.footer{background:#041a14;padding:36px 48px;display:flex;align-items:center;justify-content:space-between;font-size:.8rem;color:var(--tmute);border-top:1px solid rgba(255,255,255,.05)}
+.fl{display:flex;align-items:center;background:var(--w);border-radius:14px;padding:8px 16px}
+.fl img{height:32px}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.scale-row{grid-template-columns:1fr}.p-grid{grid-template-columns:repeat(3,1fr)}.ca{grid-template-columns:1fr}.lr{grid-template-columns:repeat(2,1fr)}.patent-inner{flex-direction:column;text-align:center}.patent-title{white-space:normal}.infini-tiles{flex-direction:column}.inf-arrow{transform:rotate(90deg)}}
+@media(max-width:768px){
+.nav{padding:0 20px;height:72px}.nl{display:none}.nt{display:flex}
+.nl.active{display:flex;flex-direction:column;position:absolute;top:76px;left:0;right:0;background:rgba(6,31,25,.97);backdrop-filter:blur(20px);padding:20px 24px 28px;gap:16px;border-bottom:1px solid var(--bs)}
+.hero-in{padding:120px 20px 80px}
+.pipeline,.particles,.founders,.partners{padding:72px 20px}
+.p-grid{grid-template-columns:repeat(2,1fr)}
+.fg{grid-template-columns:1fr;max-width:340px;margin-left:auto;margin-right:auto}
+.lr{grid-template-columns:1fr}
+.bn-row{gap:40px}.fr{flex-direction:column}
+.footer{flex-direction:column;gap:12px;text-align:center}
+.ha{flex-direction:column;align-items:flex-start}
+.ca-right iframe{height:260px}
+.ca-wrap{padding:60px 20px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo"><img src="assets/logos/logo-infinifluidics.png" alt="InfiniFluidics"></a>
+  <ul class="nl" id="navLinks">
+    <li><a href="#pipeline">About</a></li>
+    <li><a href="technology.html">Technology</a></li>
+    <li><a href="#particles">Platform</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="news.html">News</a></li>
+    <li><a href="#contact" class="nc">Get in Touch</a></li>
+  </ul>
+  <div class="nt" onclick="document.getElementById('navLinks').classList.toggle('active')"><span></span><span></span><span></span></div>
+</nav>
+
+<section class="hero">
+  <video autoplay muted loop playsinline><source src="assets/hero-video.mp4" type="video/mp4"></video>
+  <div class="hero-ov"></div>
+  <div class="orb o1"></div><div class="orb o2"></div>
+  <div class="hero-in">
+    <div class="hb">Precision Microfluidic Manufacturing</div>
+    <h1>100× Faster from <span>Lab to Patient</span></h1>
+    <p class="hero-sub">One microfluidic platform for screening, clinical trials, and commercial manufacturing.</p>
+    <div class="hero-highlight">Same chip. Same quality. Any scale.</div>
+    <div class="ha">
+      <a href="#contact" class="bg">Request a Consultation →</a>
+      <a href="#particles" class="bgh">Explore the Platform</a>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+<section class="pipeline" id="pipeline">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="reveal">
+      <div class="label">One Platform, Every Stage</div>
+      <h2>From discovery to <span>GMP manufacturing</span></h2>
+      <p class="tag">You focus on the science. We handle the scale.</p>
+    </div>
+
+    <div class="scale-row reveal">
+      <div class="scale-card">
+        <div class="sc-icon"><svg width="40" height="40" fill="none" stroke="#0d5e4a" stroke-width="1.6" viewBox="0 0 24 24"><path d="M9.75 3.1v5.71a2.25 2.25 0 01-.66 1.6L5 14.5m4.75-11.4a24.3 24.3 0 014.5 0m0 0v5.71a2.25 2.25 0 00.66 1.6L19 14.5m-4.75-11.4c.25.02.5.05.75.08M5 14.5l-1.46 7.28a.75.75 0 00.74.89h15.44a.75.75 0 00.74-.89L19 14.5"/></svg></div>
+        <h3>Screening & Discovery</h3>
+        <p>Screen hundreds of process parameters simultaneously. Find the best performers fast.</p>
+        <div class="chip-vis" id="chips1"></div>
+      </div>
+      <div class="scale-card">
+        <div class="sc-icon"><svg width="40" height="40" fill="none" stroke="#0d5e4a" stroke-width="1.6" viewBox="0 0 24 24"><path d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"/></svg></div>
+        <h3>Clinical Trials</h3>
+        <p>On-demand scale-out according to need. Same microfluidic unit, GMP-grade.</p>
+        <div class="chip-vis" id="chips2"></div>
+      </div>
+      <div class="scale-card">
+        <div class="sc-icon"><svg width="40" height="40" fill="none" stroke="#0d5e4a" stroke-width="1.6" viewBox="0 0 24 24"><path d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3 0h.008v.008H18V7.5z"/></svg></div>
+        <h3>Commercial GMP</h3>
+        <p>Global manufacturing scales from your benchtop. Thousands of parallel units.</p>
+        <div class="chip-vis" id="chips3"></div>
+      </div>
+    </div>
+
+    <!-- Insight preservation arrow -->
+    <div class="flow-arrow reveal">
+      <svg width="100%" height="48" viewBox="0 0 940 48" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="ag" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1db885"/><stop offset="100%" stop-color="#0d5e4a"/></linearGradient></defs>
+        <path d="M40 24 H880 L870 14 M880 24 L870 34" stroke="url(#ag)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <div class="flow-label">Insights and process conditions preserved across every stage</div>
+    </div>
+
+    <div class="unified-bar reveal">
+      <strong style="font-size:1.2rem;letter-spacing:.02em">1 Platform.</strong>
+      &nbsp;Zero process changes between scales. Discovery conditions carry straight to GMP.
+    </div>
+    <div style="text-align:center;margin-top:32px" class="reveal">
+      <a href="technology.html" class="btn-tech">Learn More About the Technology →</a>
+    </div>
+  </div>
+</section>
+<section class="particles" id="particles">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="reveal">
+      <div class="label">VLSMI Platform</div>
+      <h2>Any particle. <span>Any scale.</span></h2>
+      <p class="sub">VLSMI uses modular microfluidic building blocks fabricated with semiconductor precision. Each unit is plug-and-play and particle agnostic. Swap the chemistry, keep the platform.</p>
+    </div>
+    <div class="p-grid reveal">
+      <div class="p-card">
+        <img class="p-img" src="assets/lnps.png" alt="LNPs">
+        <h4>LNPs</h4>
+      </div>
+      <div class="p-card">
+        <img class="p-img" src="assets/nanoparticles.png" alt="Nanoparticles">
+        <h4>Nanoparticles</h4>
+      </div>
+      <div class="p-card">
+        <img class="p-img" src="assets/janus.jpg" alt="Janus">
+        <h4>Janus</h4>
+      </div>
+      <div class="p-card">
+        <img class="p-img" src="assets/microcapsules.gif" alt="Microcapsules">
+        <h4>Microcapsules</h4>
+      </div>
+      <div class="p-card">
+        <img class="p-img" src="assets/microgel.jpg" alt="Microgels">
+        <h4>Microgels</h4>
+      </div>
+    </div>
+    <div class="yf reveal">
+      <h3>Find the <em>best candidate</em>.<br>Take it straight to <em>market</em>.</h3>
+    </div>
+    <div class="infini-tiles reveal">
+      <div class="inf-tile inf-screen">
+        <div class="inf-step">01</div>
+        <h3>Infini High Throughput Screening & Optimization</h3>
+        <p>Screen thousands of formulations in parallel on a single chip. Identify top-performing candidates 100× faster. <span class="inf-no inf-no-g">No bottlenecks.</span> <span class="inf-no inf-no-g">No compromise on quality.</span></p>
+      </div>
+      <div class="inf-arrow">→</div>
+      <div class="inf-tile inf-mfg">
+        <div class="inf-step">02</div>
+        <h3>Infini High Throughput Manufacturing</h3>
+        <p>Take your best candidate straight to GMP production on the same platform. <span class="inf-no inf-no-y">No process transfer.</span> <span class="inf-no inf-no-y">No re-optimization.</span> <span class="inf-no inf-no-y">No time lost.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIG NUMBERS -->
+<section class="bignums">
+  <div class="bn-row reveal">
+    <div class="bn"><div class="bn-n">100×</div><div class="bn-t">Faster screening</div></div>
+    <div class="bn"><div class="bn-n">1,000×</div><div class="bn-t">Linear scale-out</div></div>
+    <div class="bn"><div class="bn-n">Multiple</div><div class="bn-t">GMP-ready system deployments</div></div>
+  </div>
+</section>
+
+<!-- PATENT BANNER -->
+<section class="patent-banner">
+  <div class="patent-inner reveal">
+    <div class="patent-shields">
+      <img src="assets/logos/logo-infinifluidics.png" alt="InfiniFluidics">
+      <img src="assets/logos/penn-shield.png" alt="Penn">
+      <img src="assets/logos/harvard.png" alt="Harvard">
+    </div>
+    <div class="patent-text">
+      <div class="patent-title">Exclusively licensed foundational patents in VLSMI and microfluidic manufacturing</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDERS -->
+<section class="founders" id="team">
+  <div class="mx" style="max-width:1200px;margin:0 auto">
+    <div class="reveal">
+      <div class="label">Leadership</div>
+      <h2>Technology Built on <span>Decades of Technical Expertise</span></h2>
+      <p>Deep expertise in microfluidics and nanofabrication from the University of Pennsylvania.</p>
+    </div>
+    <div class="fg">
+      <div class="fc reveal">
+        <img src="https://airfoundry.upenn.edu/wp-content/uploads/2024/12/sagar-yadavali.jpg" alt="Dr. Sagar Yadavali">
+        <h4>Dr. Sagar Yadavali</h4>
+        <div class="role">Founder & CEO</div>
+        <div class="bio">Nano/microparticle manufacturing expert. Inventor of VLSMI technology.</div>
+      </div>
+      <div class="fc reveal">
+        <img src="https://airfoundry.upenn.edu/wp-content/uploads/2024/11/daeyeon-lee.jpg" alt="Dr. Daeyeon Lee">
+        <h4>Dr. Daeyeon Lee</h4>
+        <div class="role">Co-Founder</div>
+        <div class="bio">Heuer Professor at Penn. Director of AIRFoundry. Nanomanufacturing leader.</div>
+      </div>
+      <div class="fc reveal">
+        <img src="https://airfoundry.upenn.edu/wp-content/uploads/2024/11/David-Issadore.jpg" alt="Dr. David Issadore">
+        <h4>Dr. David Issadore</h4>
+        <div class="role">Co-Founder</div>
+        <div class="bio">Professor of Bioengineering at Penn. Microfluidics and nanofabrication expert.</div>
+      </div>
+    </div>
+    <div class="tc reveal"><a href="team.html" class="bgh">Meet the Full Team →</a></div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="partners" id="partners">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="reveal">
+      <div class="label">Worked With</div>
+      <h2>World-class <span>partners</span></h2>
+    </div>
+    <div class="lr reveal">
+      <div class="lb big"><img src="assets/logos/upenn.png" alt="University of Pennsylvania"></div>
+      <div class="lb big"><img src="assets/logos/livermore.png" alt="Lawrence Livermore National Laboratory"></div>
+      <div class="lb big"><img src="assets/logos/airfoundry.png" alt="AIRFoundry"></div>
+      <div class="lb"><img src="assets/logos/harvard.png" alt="Harvard University"></div>
+      <div class="lb"><img src="assets/logos/r3.png" alt="RNA Readiness + Response" style="background:#1a1a1a;padding:12px 16px;border-radius:8px"></div>
+      <div class="lb"><img src="assets/logos/nsf.png" alt="National Science Foundation"></div>
+      <div class="lb"><img src="assets/logos/astar.png" alt="A*STAR Singapore"></div>
+      <div class="lb"><img src="assets/logos/nih.svg" alt="NIH"></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS TEASER -->
+<section class="news-teaser">
+  <div style="max-width:1200px;margin:0 auto;text-align:center" class="reveal">
+    <div class="label" style="color:var(--mb)">Latest</div>
+    <h2 style="font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:800;margin-bottom:8px">News & Publications</h2>
+    <p style="color:var(--ts);margin-bottom:28px;font-size:1rem">Research, press coverage, and the latest from InfiniFluidics.</p>
+    <a href="news.html" class="bg">View All →</a>
+  </div>
+</section>
+
+<!-- CONTACT + ANIMATION -->
+<div class="ca-wrap" id="contact">
+  <div class="ca">
+    <div class="ca-left">
+      <div class="label">Connect</div>
+      <h2>Ready to accelerate your <span id="cycleWord" class="cyc">discovery</span>?</h2>
+      <p>Tell us about your particle, your scale, and your timeline. We'll show you how VLSMI gets you there faster.</p>
+      <div class="cf" id="contactForm">
+        <div class="fr">
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Email" required>
+        </div>
+        <input type="text" name="org" placeholder="Organization">
+        <textarea name="message" placeholder="Tell us about your project..."></textarea>
+        <a href="mailto:sagar@infinifluidics.com" class="bg" onclick="var f=document.getElementById('contactForm');var n=f.querySelector('[name=name]').value;var e=f.querySelector('[name=email]').value;var o=f.querySelector('[name=org]').value;var m=f.querySelector('[name=message]').value;this.href='mailto:sagar@infinifluidics.com?subject='+encodeURIComponent('Inquiry from '+n)+'&body='+encodeURIComponent('Name: '+n+'\nEmail: '+e+'\nOrganization: '+o+'\n\n'+m);">Send Inquiry →</a>
+      </div>
+      <p class="ca-alt">Or email <a href="mailto:sagar@infinifluidics.com">sagar@infinifluidics.com</a></p>
+    </div>
+    <div class="ca-right">
+      <iframe src="assets/animation.html" title="InfiniFluidics Animation" loading="lazy" scrolling="no"></iframe>
+    </div>
+  </div>
+  <div class="accel reveal">Let's <span>accelerate</span>.</div>
+</div>
+
+<footer class="footer">
+  <div class="fl"><img src="assets/logos/logo-infinifluidics.png" alt="InfiniFluidics"></div>
+  <div>© 2026 InfiniFluidics. All rights reserved.</div>
+</footer>
+
+<script>
+// Nav scroll
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>50));
+
+// Reveal
+const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*40);obs.unobserve(e.target)}})},{threshold:.08,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t){t.scrollIntoView({behavior:'smooth',block:'start'});document.getElementById('navLinks').classList.remove('active')}})});
+
+// Scale-out chip visualization
+function buildChips(id, count, label) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const chipObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const shown = Math.min(count, 36);
+        for (let i = 0; i < shown; i++) {
+          const chip = document.createElement('div');
+          chip.className = 'chip-unit';
+          chip.style.animationDelay = (i * 40) + 'ms';
+          el.appendChild(chip);
+        }
+        const lbl = document.createElement('div');
+        lbl.className = 'chip-count';
+        lbl.textContent = label;
+        el.parentElement.appendChild(lbl);
+        chipObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  chipObs.observe(el);
+}
+buildChips('chips1', 1, '1 unit');
+buildChips('chips2', 10, '10s of units');
+buildChips('chips3', 36, '1,000s of units');
+
+// Cycling contact heading
+const words = ['discovery','manufacturing','GMP'];
+const cycleEl = document.getElementById('cycleWord');
+let wi = 0;
+if (cycleEl) {
+  setInterval(() => {
+    cycleEl.style.opacity = '0';
+    cycleEl.style.transform = 'translateY(8px)';
+    setTimeout(() => {
+      wi = (wi + 1) % words.length;
+      cycleEl.textContent = words[wi];
+      cycleEl.style.opacity = '1';
+      cycleEl.style.transform = 'translateY(0)';
+    }, 300);
+  }, 2400);
+  cycleEl.style.transition = 'opacity .3s, transform .3s';
+  cycleEl.style.display = 'inline-block';
+}
+</script>
+</body>
+</html>
